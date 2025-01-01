@@ -78,6 +78,14 @@
     ],
     "route": {
         "rule_set": [
+            {
+                "type": "remote",
+                "tag": "tv-extra",
+                "update_interval": "1d",
+                "download_detour": "proxy",
+                "url": "https:\/\/raw.githubusercontent.com\/dimzon\/tvbox-singbox-config\/main\/tv-ruleset-extra.srs",
+                "format": "binary"
+            }
         ],
         "auto_detect_interface": false,
         "final": "bypass",
@@ -88,6 +96,10 @@
             },
             {
                 "rule_set": "tv",
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": "tv-extra",
                 "outbound": "proxy"
             },
             {
