@@ -1,0 +1,14 @@
+object(stdClass)#2 (2) {
+  ["version"]=>
+  int(2)
+  ["rules"]=>
+  array(1) {
+    [0]=>
+    object(stdClass)#3 (1) {
+      ["domain_suffix"]=>
+      array(0) {
+      }
+    }
+  }
+}
+int(41290)
