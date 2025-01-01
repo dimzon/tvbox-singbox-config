@@ -1,130 +1,14 @@
 {
-    "dns": {
-        "independent_cache": true,
-        "rules": [
-            {
-                "outbound": "any",
-                "server": "direct"
-            },
-            {
-                "query_type": [
-                    32,
-                    33
-                ],
-                "server": "dns-block"
-            },
-            {
-                "domain_suffix": ".lan",
-                "server": "dns-block"
-            }
-        ],
-        "servers": [
-            {
-                "address": "https://dns.google/dns-query",
-                "address_resolver": "dns-local",
-                "detour": "proxy",
-                "strategy": "",
-                "tag": "dns-remote"
-            },
-            {
-                "address": "https://doh.pub/dns-query",
-                "address_resolver": "dns-local",
-                "detour": "direct",
-                "strategy": "",
-                "tag": "dns-direct"
-            },
-            {
-                "address": "rcode://success",
-                "tag": "dns-block"
-            },
-            {
-                "address": "local",
-                "detour": "direct",
-                "tag": "dns-local"
-            }
-        ]
-    },
-    "inbounds": [
-        {
-            "domain_strategy": "",
-            "listen": "127.0.0.1",
-            "listen_port": 2080,
-            "sniff": true,
-            "sniff_override_destination": false,
-            "tag": "mixed-in",
-            "type": "mixed"
-        }
-    ],
-    "log": {
-        "level": "info"
-    },
     "outbounds": [
         {
             "domain_strategy": "",
             "method": "2022-blake3-aes-128-gcm",
-            "password": "***********************************",
-            "server": "1.2.3.4",
+            "password": "***",
+            "server": "***",
             "server_port": 1234,
             "tag": "proxy",
             "type": "shadowsocks",
             "udp_over_tcp": false
-        },
-        {
-            "tag": "direct",
-            "type": "direct"
-        },
-        {
-            "tag": "bypass",
-            "type": "direct"
-        },
-        {
-            "tag": "block",
-            "type": "block"
-        },
-        {
-            "tag": "dns-out",
-            "type": "dns"
         }
-    ],
-    "route": {
-        "auto_detect_interface": false,
-        "final": "proxy",
-        "geoip": {
-            "path": "C:/APP/nekoray/geoip.db"
-        },
-        "geosite": {
-            "path": "C:/APP/nekoray/geosite.db"
-        },
-        "rules": [
-            {
-                "outbound": "dns-out",
-                "protocol": "dns"
-            },
-            {
-                "network": "udp",
-                "outbound": "block",
-                "port": [
-                    135,
-                    137,
-                    138,
-                    139,
-                    5353
-                ]
-            },
-            {
-                "ip_cidr": [
-                    "224.0.0.0/3",
-                    "ff00::/8"
-                ],
-                "outbound": "block"
-            },
-            {
-                "outbound": "block",
-                "source_ip_cidr": [
-                    "224.0.0.0/3",
-                    "ff00::/8"
-                ]
-            }
-        ]
-    }
+    ]
 }
