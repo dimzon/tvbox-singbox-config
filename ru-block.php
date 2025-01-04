@@ -1,4 +1,54 @@
 <?php
+$urls=['https://antizapret.prostovpn.org/domains-export.txt','https://antifilter.download/list/domains.lst'];
+$blacklist=[
+    'casino','advisor',
+    '1win','1bet','pharm','bookmaker','spins','cassino',
+    'casyno',
+    'cas1no',
+    'casin0',
+    'cazino',
+    'kazino',
+    'kasino',
+    'diplom',
+    'poker',
+    '777',
+    '888',
+    'azino',
+    'bitcoin',
+    'kraken',
+    '-kra',
+    'gay',
+    'shemale',
+    'porn',
+    'gambl',
+    'kraken',
+    'sofosbuvir',"konoply","semyanych", "agro-"
+];
+$whitelist=['zetflix','zona','zombie',
+    'film','jacket','jacred',"shara","episode","seria","ultradox", "pirat","peer","player","mp4","m3u","mkv","rutor","mmn-club",
+    'stream',
+    'share',
+    'sharing',
+    'rezka',
+    'kino',
+    'cinema',
+    'sinema',
+    'torrent',
+    'tracker',
+    'season',
+    'serial',
+    'hd',
+    'tracker',
+    'movie'
+];
+
+
+function is_in_list($str,$list,$callable='str_contains'){
+    foreach($list as $str2)
+        if($callable($str,$str2)) return true;
+    return false;    
+}
+
 ini_set('memory_limit', '2048M');
 $file = file_get_contents("tv-ruleset.json");
 $rules = json_decode($file, false);
@@ -14,16 +64,10 @@ function is_in_rules($str){
     }
     return false;
 }
-// var_dump($rules);
-// return;
-
-$url="https://antifilter.download/list/domains.lst";
-// $response = file_get_contents($url);
-// var_dump($response);
-// return;
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_PROXY, 'socks5://127.0.0.1:2080');
+curl_setopt($ch, CURLOPT_URL, $urls[0]);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_VERBOSE, 1);
 curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -33,13 +77,89 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 $response = curl_exec($ch);
-$response = preg_replace("/^\\d+\\./m",".",$response);
-$response = preg_replace("/^\\d+www\\./m",".",$response);
-$response = preg_replace("/^\\w\\d*\\./m",".",$response);
 
 $arr = preg_split("/\s+/", $response);
 $arr = array_unique($arr);
 $arr=array_values($arr);
+
+$arr = array_filter($arr, function($str)use($whitelist,$blacklist){
+    if(strlen($str)<3) return false;
+    
+    if(is_in_list($str,$whitelist)) return true;
+    if(is_in_list($str,$blacklist)) return false;
+
+    if(str_starts_with($str,'.')) return false;
+    if(str_starts_with($str,'kra')) return false;
+
+    return true;
+});
+$arr=array_values($arr);
+
+
+$response = implode("\n",$arr);
+$response = preg_replace('/^(\S+\.)+(\S+\.\S+)$/m','.$2',$response);
+$arr = explode("\n",$response);
+$arr = array_unique($arr);
+
+$arr=array_values($arr);
+$arr=array_map("strrev",$arr);
+sort($arr);
+$arr=array_map("strrev",$arr);
+$before=count($arr);
+$a=[];
+$prev=false;
+foreach($arr as $str)
+{
+    if($prev===false)
+    {
+        $prev = $str;
+        $a[]=$str;
+    }
+    else{
+        if(str_ends_with($str,$prev)){
+            if(!str_starts_with($prev,'.') && !str_ends_with($str,".{$prev}")){
+                $prev = $str;
+                $a[]=$str;
+            } else {
+                // skip
+            }
+
+        } else {
+            $prev = $str;
+            $a[]=$str;
+        }
+
+    }
+}
+$arr=$a;
+$after=count($arr);
+sort($arr);
+$full=$arr;
+$arr = array_filter($arr, function($str)use($whitelist){return is_in_list($str,$whitelist);});
+$arr = array_values($arr);
+$file = file_get_contents("tv-ruleset.json");
+$rules = json_decode($file, false);
+$arr = array_merge($arr,$rules->rules[0]->domain_suffix);
+$arr = array_unique($arr);
+$arr = array_values($arr);
+sort($arr);
+$rules->rules[0]->domain_suffix=$arr;
+file_put_contents("tv-ruleset.json", json_encode($rules, JSON_PRETTY_PRINT));
+
+
+$arr=$full;
+$arr = array_filter($arr, function($str)use($whitelist){return !is_in_list($str,$whitelist);});
+$arr = array_values($arr);
+
+
+$file = file_get_contents("ruleset-template.json");
+$rules = json_decode($file, false);
+var_dump($rules);
+$rules->rules[0]->domain_suffix=$arr;
+file_put_contents("tv-ruleset-extra.json", json_encode($rules, JSON_PRETTY_PRINT));
+var_dump($after);
+return;
+
 /*
 $arr = array_filter($arr, function($str){
     if(strlen($str)<5) return false;
