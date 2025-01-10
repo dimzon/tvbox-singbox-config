@@ -1,0 +1,468 @@
+//profile-title: base64:RG1pdHJ5IEAgdmRzaW5hIEAgcmx9
+//profile-update-interval: 60
+//subscription-userinfo: upload=0; download=0; total=10737418240000000; expire=2546249531
+//support-url: https://t.me/dimzon541
+//profile-web-page-url: https://github.com/dimzon/tvbox-singbox-config/
+{
+    "log": {
+        "disabled": false,
+        "level": "error",
+        "timestamp": true
+    },
+    "experimental": {
+        "clash_api": {
+            "external_controller": "0.0.0.0:9090",
+            "external_ui": "yacd",
+            "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+            "external_ui_download_detour": "direct",
+            "secret": "",
+            "default_mode": "rule"
+        }
+    },
+    "dns": {
+        "servers": [
+            {
+                "address": "tcp://1.1.1.1",
+                "address_resolver": "dns-local",
+                "strategy": "prefer_ipv4",
+                "detour": "proxy",
+                "tag": "dns-remote"
+            },
+            {
+                "address": "tcp://1.1.1.1",
+                "address_resolver": "dns-local",
+                "detour": "proxy",
+                "strategy": "prefer_ipv4",
+                "tag": "dns-direct"
+            },
+            {
+                "address": "local",
+                "detour": "direct",
+                "tag": "dns-local"
+            },
+            {
+                "address": "rcode://success",
+                "tag": "dns-block"
+            }
+        ],
+        "rules": [
+            {
+                "domain_suffix": [
+                    ".ru"
+                ],
+                "server": "dns-direct"
+            },
+            {
+                "outbound": "direct",
+                "server": "dns-direct",
+                "rewrite_ttl": 20
+            },
+            {
+                "outbound": "any",
+                "server": "dns-direct",
+                "rewrite_ttl": 20
+            }
+        ],
+        "reverse_mapping": true,
+        "strategy": "prefer_ipv4",
+        "independent_cache": true
+    },
+    "inbounds": [
+        {
+            "listen": "0.0.0.0",
+            "listen_port": 6450,
+            "override_address": "8.8.8.8",
+            "override_port": 53,
+            "tag": "dns-in",
+            "type": "direct"
+        },
+        {
+            "type": "tun",
+            "tag": "tun-in",
+            "domain_strategy": "",
+            "interface_name": "tun0",
+            "address": "172.19.0.1/30",
+            "mtu": 9000,
+            "auto_route": true,
+            "strict_route": true,
+            "stack": "system",
+            "endpoint_independent_nat": true,
+            "sniff": true,
+            "sniff_override_destination": false,
+            "exclude_package": [
+                "ru.yandex.weatherplugin",
+                "com.softmedia.receiver",
+                "adbd",
+                "com.anydesk.anydeskandroid",
+                "ru.kinopoisk.tv",
+                "ru.ivi.client",
+                "com.ugoos.ugoos_tv_remote_srv",
+                "ru.vk.store",
+                "zank.remote",
+                "ru.rutube.app",
+                "ugoos.remotecontrolbinder",
+                "limehd.ru.ctvshka",
+                "com.anydesk.anydeskandroid",
+                "com.droidlogic.miracast",
+                "com.vk.tv",
+                "live.vkplay.app",
+                "com.google.android.tv.remote.service",
+                "com.anydesk.adcontrol.aosp"
+            ]
+        },
+        {
+            "domain_strategy": "",
+            "listen": "0.0.0.0",
+            "listen_port": 2080,
+            "sniff": true,
+            "sniff_override_destination": false,
+            "tag": "mixed-in",
+            "type": "mixed"
+        }
+    ],
+    "outbounds": [
+        {
+            "alter_id": 0,
+            "domain_strategy": "prefer_ipv4",
+            "packet_encoding": "",
+            "security": "auto",
+            "server": "139.162.166.227",
+            "server_port": 443,
+            "tag": "p_0",
+            "tls": {
+                "enabled": true,
+                "insecure": true,
+                "server_name": "ausgt02.bestforxray.buzz"
+            },
+            "transport": {
+                "headers": {
+                    "Host": "ausgt02.bestforxray.buzz"
+                },
+                "path": "/linkws",
+                "type": "ws"
+            },
+            "type": "vmess",
+            "uuid": "c1fd780a-3408-4f48-a932-5832a28ce9f6"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "5.75.202.205",
+            "server_port": 80,
+            "tag": "p_1",
+            "transport": {
+                "early_data_header_name": "Sec-WebSocket-Protocol",
+                "headers": {
+                    "Host": "dl6.heykakenakhshanemvaberanakhshanemkhadijeomanigakobraoaminfatema.com"
+                },
+                "max_early_data": 80,
+                "path": "Mmdv2rayng-V2rayngmmd-telegram-mmd_v2rayng",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "a35017af-d228-44bd-885c-e5951ce09df6"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.188.6",
+            "server_port": 2095,
+            "tag": "p_2",
+            "transport": {
+                "headers": {
+                    "Host": "da8.speedtest.hopeserver1.tech."
+                },
+                "path": "/ed=2082",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "ad179afa-18b0-4ae2-eb2d-086b767f08d3"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "password": "3723507166611775488",
+            "server": "80.240.112.167",
+            "server_port": 443,
+            "tag": "p_3",
+            "tls": {
+                "enabled": true,
+                "insecure": true,
+                "server_name": "ample-cockatoo.boa152.lol",
+                "utls": {
+                    "enabled": true,
+                    "fingerprint": "chrome"
+                }
+            },
+            "type": "trojan"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "password": "3723507166611775488",
+            "server": "80.240.112.32",
+            "server_port": 443,
+            "tag": "p_4",
+            "tls": {
+                "enabled": true,
+                "insecure": true,
+                "server_name": "oriented-terrier.boa152.lol",
+                "utls": {
+                    "enabled": true,
+                    "fingerprint": "chrome"
+                }
+            },
+            "type": "trojan"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.165.86",
+            "server_port": 2096,
+            "tag": "p_5",
+            "tls": {
+                "alpn": [
+                    "http/1.1"
+                ],
+                "enabled": true,
+                "insecure": true,
+                "server_name": "ya.ru",
+                "utls": {
+                    "enabled": true,
+                    "fingerprint": "chrome"
+                }
+            },
+            "transport": {
+                "headers": {
+                    "Host": "abc.education-10.org"
+                },
+                "path": "/translate",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "43bcf97c-a825-447c-97cf-499e0eaa75b0"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "103.252.89.42",
+            "server_port": 80,
+            "tag": "p_6",
+            "transport": {
+                "early_data_header_name": "Sec-WebSocket-Protocol",
+                "headers": {
+                    "Host": "ya.ru"
+                },
+                "max_early_data": 2048,
+                "path": "/@ZEDMODEON-ZEDMODEON@ZEDMODEON-ZEDMODEON-TEL-ZEDMODEON-ZEDMODEON-ZEDMODEON-@ZEDMODEON",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "tel--ZEDMODEON"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "password": "3723507166611775488",
+            "server": "80.240.112.236",
+            "server_port": 443,
+            "tag": "p_7",
+            "tls": {
+                "enabled": true,
+                "insecure": true,
+                "server_name": "pleased-slug.boa152.lol",
+                "utls": {
+                    "enabled": true,
+                    "fingerprint": "chrome"
+                }
+            },
+            "type": "trojan"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.242.169",
+            "server_port": 80,
+            "tag": "p_8",
+            "transport": {
+                "early_data_header_name": "Sec-WebSocket-Protocol",
+                "headers": {
+                    "Host": "goodidea.com"
+                },
+                "max_early_data": 2048,
+                "path": "ws/",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "2554662b-65d5-498d-90e3-2ad007e7ec30"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "62.60.216.210",
+            "server_port": 443,
+            "tag": "p_9",
+            "tls": {
+                "alpn": [
+                    "h2",
+                    "http/1.1"
+                ],
+                "enabled": true,
+                "insecure": true,
+                "reality": {
+                    "enabled": true,
+                    "public_key": "LoNYZgZ6WvqA2qkrVwkz4RHWnjoFTzw4h59F0GeAqh0",
+                    "short_id": "05a6d4aa5e314637"
+                },
+                "server_name": "russia.com",
+                "utls": {
+                    "enabled": true,
+                    "fingerprint": "chrome"
+                }
+            },
+            "transport": {
+                "service_name": "djshdgduuxdhgsgstXxCxshcV",
+                "type": "grpc"
+            },
+            "type": "vless",
+            "uuid": "ac4370a4-ed65-481d-ae84-1a0c38580364"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "89.187.169.72",
+            "server_port": 8443,
+            "tag": "p_10",
+            "tls": {
+                "alpn": [
+                    "h2"
+                ],
+                "enabled": true,
+                "insecure": true,
+                "server_name": "ya.ru",
+                "utls": {
+                    "enabled": true,
+                    "fingerprint": "chrome"
+                }
+            },
+            "type": "vless",
+            "uuid": "6ff213b8-ccc7-4b5a-b4aa-37f7b792a1f1"
+        },
+        {
+            "type": "selector",
+            "tag": "proxy",
+            "outbounds": [
+                "p_0",
+                "p_1",
+                "p_2",
+                "p_3",
+                "p_4",
+                "p_5",
+                "p_6",
+                "p_7",
+                "p_8",
+                "p_9",
+                "p_10",
+                "auto"
+            ],
+            "default": "auto",
+            "interrupt_exist_connections": false
+        },
+        {
+            "type": "urltest",
+            "tag": "auto",
+            "outbounds": [
+                "p_0",
+                "p_1",
+                "p_2",
+                "p_3",
+                "p_4",
+                "p_5",
+                "p_6",
+                "p_7",
+                "p_8",
+                "p_9",
+                "p_10"
+            ],
+            "url": "https://8.8.8.8/generate_204",
+            "interval": "5m",
+            "interrupt_exist_connections": false
+        },
+        {
+            "tag": "direct",
+            "type": "direct"
+        },
+        {
+            "tag": "bypass",
+            "type": "direct"
+        },
+        {
+            "tag": "block",
+            "type": "block"
+        },
+        {
+            "tag": "dns-out",
+            "type": "dns"
+        }
+    ],
+    "route": {
+        "rule_set": [
+            {
+                "type": "remote",
+                "tag": "tv-extra",
+                "update_interval": "1d",
+                "download_detour": "proxy",
+                "url": "https://raw.githubusercontent.com/dimzon/tvbox-singbox-config/main/tv-ruleset-extra.srs",
+                "format": "binary"
+            },
+            {
+                "type": "remote",
+                "tag": "tv",
+                "update_interval": "2h",
+                "download_detour": "proxy",
+                "url": "https://raw.githubusercontent.com/dimzon/tvbox-singbox-config/main/tv-ruleset.srs",
+                "format": "binary"
+            }
+        ],
+        "auto_detect_interface": true,
+        "override_android_vpn": true,
+        "final": "bypass",
+        "rules": [
+            {
+                "outbound": "dns-out",
+                "port": [
+                    53
+                ]
+            },
+            {
+                "inbound": [
+                    "dns-in"
+                ],
+                "outbound": "dns-out"
+            },
+            {
+                "rule_set": "tv",
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": "tv-extra",
+                "outbound": "proxy"
+            },
+            {
+                "ip_cidr": [
+                    "224.0.0.0/3",
+                    "ff00::/8"
+                ],
+                "outbound": "block",
+                "source_ip_cidr": [
+                    "224.0.0.0/3",
+                    "ff00::/8"
+                ]
+            }
+        ]
+    }
+}    
