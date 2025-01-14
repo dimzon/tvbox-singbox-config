@@ -1,8 +1,3 @@
-//profile-title: base64:RG1pdHJ5IEAgdmRzaW5hIEAgcmx9
-//profile-update-interval: 60
-//subscription-userinfo: upload=0; download=0; total=10737418240000000; expire=2546249531
-//support-url: https://t.me/dimzon541
-//profile-web-page-url: https://github.com/dimzon/tvbox-singbox-config/
 {
     "log": {
         "disabled": false,
@@ -47,12 +42,6 @@
         ],
         "rules": [
             {
-                "domain_suffix": [
-                    ".ru"
-                ],
-                "server": "dns-direct"
-            },
-            {
                 "outbound": "direct",
                 "server": "dns-direct",
                 "rewrite_ttl": 20
@@ -79,7 +68,7 @@
         {
             "type": "tun",
             "tag": "tun-in",
-            "domain_strategy": "",
+            "domain_strategy": "prefer_ipv4",
             "interface_name": "tun0",
             "address": "172.19.0.1/30",
             "mtu": 9000,
@@ -111,7 +100,7 @@
             ]
         },
         {
-            "domain_strategy": "",
+            "domain_strategy": "prefer_ipv4",
             "listen": "0.0.0.0",
             "listen_port": 2080,
             "sniff": true,
@@ -122,27 +111,83 @@
     ],
     "outbounds": [
         {
-            "alter_id": 0,
+            "tag": "direct",
+            "type": "direct"
+        },
+        {
+            "tag": "bypass",
+            "type": "direct"
+        },
+        {
+            "tag": "block",
+            "type": "block"
+        },
+        {
+            "tag": "dns-out",
+            "type": "dns"
+        },
+        {
+            "type": "selector",
+            "tag": "proxy",
+            "outbounds": [
+                "auto",
+                "00",
+                "01",
+                "02",
+                "03",
+                "04",
+                "05",
+                "06",
+                "07",
+                "08",
+                "09",
+                "10",
+                "11",
+                "12",
+                "13"
+            ],
+            "default": "auto",
+            "interrupt_exist_connections": false
+        },
+        {
+            "type": "urltest",
+            "tag": "auto",
+            "outbounds": [
+                "00",
+                "01",
+                "02",
+                "03",
+                "04",
+                "05",
+                "06",
+                "07",
+                "08",
+                "09",
+                "10",
+                "11",
+                "12",
+                "13"
+            ],
+            "url": "https://8.8.8.8/generate_204",
+            "interval": "1m",
+            "interrupt_exist_connections": false
+        },
+        {
             "domain_strategy": "prefer_ipv4",
+            "flow": "",
             "packet_encoding": "",
-            "security": "auto",
-            "server": "139.162.166.227",
-            "server_port": 443,
-            "tag": "p_0",
-            "tls": {
-                "enabled": true,
-                "insecure": true,
-                "server_name": "ausgt02.bestforxray.buzz"
-            },
+            "server": "5.75.200.6",
+            "server_port": 80,
+            "tag": "00",
             "transport": {
                 "headers": {
-                    "Host": "ausgt02.bestforxray.buzz"
+                    "Host": "vkvd127.mycdn.me"
                 },
-                "path": "/linkws",
+                "path": "/stream/",
                 "type": "ws"
             },
-            "type": "vmess",
-            "uuid": "c1fd780a-3408-4f48-a932-5832a28ce9f6"
+            "type": "vless",
+            "uuid": "25b8f4b0-4f7d-400f-bc4a-f10e5b8796a2"
         },
         {
             "domain_strategy": "prefer_ipv4",
@@ -150,7 +195,7 @@
             "packet_encoding": "",
             "server": "5.75.202.205",
             "server_port": 80,
-            "tag": "p_1",
+            "tag": "01",
             "transport": {
                 "early_data_header_name": "Sec-WebSocket-Protocol",
                 "headers": {
@@ -167,52 +212,73 @@
             "domain_strategy": "prefer_ipv4",
             "flow": "",
             "packet_encoding": "",
-            "server": "91.107.188.6",
-            "server_port": 2095,
-            "tag": "p_2",
+            "server": "91.107.253.95",
+            "server_port": 2053,
+            "tag": "02",
+            "tls": {
+                "alpn": [
+                    "http/1.1"
+                ],
+                "enabled": true,
+                "insecure": true,
+                "server_name": "vkvd127.mycdn.me",
+                "utls": {
+                    "enabled": true,
+                    "fingerprint": "chrome"
+                }
+            },
             "transport": {
                 "headers": {
-                    "Host": "da8.speedtest.hopeserver1.tech."
+                    "Host": "qcgpeehn15.hamdollah-bagheri.info"
                 },
-                "path": "/ed=2082",
+                "path": "/",
                 "type": "ws"
             },
             "type": "vless",
-            "uuid": "ad179afa-18b0-4ae2-eb2d-086b767f08d3"
+            "uuid": "8938d63f-7dda-43be-9a1e-819adac28297"
         },
         {
             "domain_strategy": "prefer_ipv4",
-            "password": "3723507166611775488",
-            "server": "80.240.112.167",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.248.32",
+            "server_port": 80,
+            "tag": "03",
+            "transport": {
+                "headers": {
+                    "Host": "vkvd127.mycdn.me"
+                },
+                "path": "/stream/",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "25b8f4b0-4f7d-400f-bc4a-f10e5b8796a2"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.253.95",
             "server_port": 443,
-            "tag": "p_3",
+            "tag": "04",
             "tls": {
+                "alpn": [
+                    "h2",
+                    "http/1.1"
+                ],
                 "enabled": true,
                 "insecure": true,
-                "server_name": "ample-cockatoo.boa152.lol",
+                "server_name": "vkvd127.mycdn.me",
                 "utls": {
                     "enabled": true,
                     "fingerprint": "chrome"
                 }
             },
-            "type": "trojan"
-        },
-        {
-            "domain_strategy": "prefer_ipv4",
-            "password": "3723507166611775488",
-            "server": "80.240.112.32",
-            "server_port": 443,
-            "tag": "p_4",
-            "tls": {
-                "enabled": true,
-                "insecure": true,
-                "server_name": "oriented-terrier.boa152.lol",
-                "utls": {
-                    "enabled": true,
-                    "fingerprint": "chrome"
-                }
+            "transport": {
+                "type": "grpc"
             },
-            "type": "trojan"
+            "type": "vless",
+            "uuid": "8938d63f-7dda-43be-9a1e-819adac28297"
         },
         {
             "domain_strategy": "prefer_ipv4",
@@ -220,14 +286,14 @@
             "packet_encoding": "",
             "server": "91.107.165.86",
             "server_port": 2096,
-            "tag": "p_5",
+            "tag": "05",
             "tls": {
                 "alpn": [
                     "http/1.1"
                 ],
                 "enabled": true,
                 "insecure": true,
-                "server_name": "ya.ru",
+                "server_name": "vkvd127.mycdn.me",
                 "utls": {
                     "enabled": true,
                     "fingerprint": "chrome"
@@ -247,166 +313,161 @@
             "domain_strategy": "prefer_ipv4",
             "flow": "",
             "packet_encoding": "",
-            "server": "103.252.89.42",
-            "server_port": 80,
-            "tag": "p_6",
-            "transport": {
-                "early_data_header_name": "Sec-WebSocket-Protocol",
-                "headers": {
-                    "Host": "ya.ru"
-                },
-                "max_early_data": 2048,
-                "path": "/@ZEDMODEON-ZEDMODEON@ZEDMODEON-ZEDMODEON-TEL-ZEDMODEON-ZEDMODEON-ZEDMODEON-@ZEDMODEON",
-                "type": "ws"
-            },
-            "type": "vless",
-            "uuid": "tel--ZEDMODEON"
-        },
-        {
-            "domain_strategy": "prefer_ipv4",
-            "password": "3723507166611775488",
-            "server": "80.240.112.236",
+            "server": "91.107.176.100",
             "server_port": 443,
-            "tag": "p_7",
-            "tls": {
-                "enabled": true,
-                "insecure": true,
-                "server_name": "pleased-slug.boa152.lol",
-                "utls": {
-                    "enabled": true,
-                    "fingerprint": "chrome"
-                }
-            },
-            "type": "trojan"
-        },
-        {
-            "domain_strategy": "prefer_ipv4",
-            "flow": "",
-            "packet_encoding": "",
-            "server": "91.107.242.169",
-            "server_port": 80,
-            "tag": "p_8",
-            "transport": {
-                "early_data_header_name": "Sec-WebSocket-Protocol",
-                "headers": {
-                    "Host": "goodidea.com"
-                },
-                "max_early_data": 2048,
-                "path": "ws/",
-                "type": "ws"
-            },
-            "type": "vless",
-            "uuid": "2554662b-65d5-498d-90e3-2ad007e7ec30"
-        },
-        {
-            "domain_strategy": "prefer_ipv4",
-            "flow": "",
-            "packet_encoding": "",
-            "server": "62.60.216.210",
-            "server_port": 443,
-            "tag": "p_9",
+            "tag": "06",
             "tls": {
                 "alpn": [
-                    "h2",
                     "http/1.1"
                 ],
                 "enabled": true,
                 "insecure": true,
-                "reality": {
-                    "enabled": true,
-                    "public_key": "LoNYZgZ6WvqA2qkrVwkz4RHWnjoFTzw4h59F0GeAqh0",
-                    "short_id": "05a6d4aa5e314637"
-                },
-                "server_name": "russia.com",
+                "server_name": "ad5.transitkala.com",
                 "utls": {
                     "enabled": true,
                     "fingerprint": "chrome"
                 }
             },
             "transport": {
-                "service_name": "djshdgduuxdhgsgstXxCxshcV",
-                "type": "grpc"
+                "headers": {
+                    "Host": "ad5.transitkala.com"
+                },
+                "path": "/",
+                "type": "ws"
             },
             "type": "vless",
-            "uuid": "ac4370a4-ed65-481d-ae84-1a0c38580364"
+            "uuid": "10321f1d-6418-40fe-b5ac-dc2a5f6fb0e8"
         },
         {
             "domain_strategy": "prefer_ipv4",
             "flow": "",
             "packet_encoding": "",
-            "server": "89.187.169.72",
-            "server_port": 8443,
-            "tag": "p_10",
+            "server": "91.107.249.239",
+            "server_port": 80,
+            "tag": "07",
+            "transport": {
+                "headers": {
+                    "Host": "vkvd127.mycdn.me"
+                },
+                "path": "/stream/",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "25b8f4b0-4f7d-400f-bc4a-f10e5b8796a2"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.240.50",
+            "server_port": 80,
+            "tag": "08",
+            "transport": {
+                "headers": {
+                    "Host": "vkvd127.mycdn.me"
+                },
+                "path": "/stream/",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "25b8f4b0-4f7d-400f-bc4a-f10e5b8796a2"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.144.35",
+            "server_port": 80,
+            "tag": "09",
+            "transport": {
+                "headers": {
+                    "Host": "vkvd127.mycdn.me"
+                },
+                "path": "/stream/",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "25b8f4b0-4f7d-400f-bc4a-f10e5b8796a2"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.246.101",
+            "server_port": 80,
+            "tag": "10",
+            "transport": {
+                "headers": {
+                    "Host": "vkvd127.mycdn.me"
+                },
+                "path": "/stream/",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "25b8f4b0-4f7d-400f-bc4a-f10e5b8796a2"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.241.187",
+            "server_port": 80,
+            "tag": "11",
+            "transport": {
+                "headers": {
+                    "Host": "vkvd127.mycdn.me"
+                },
+                "path": "/stream/",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "25b8f4b0-4f7d-400f-bc4a-f10e5b8796a2"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.250.169",
+            "server_port": 80,
+            "tag": "12",
+            "transport": {
+                "headers": {
+                    "Host": "vkvd127.mycdn.me"
+                },
+                "path": "/stream/",
+                "type": "ws"
+            },
+            "type": "vless",
+            "uuid": "25b8f4b0-4f7d-400f-bc4a-f10e5b8796a2"
+        },
+        {
+            "domain_strategy": "prefer_ipv4",
+            "flow": "",
+            "packet_encoding": "",
+            "server": "91.107.176.100",
+            "server_port": 443,
+            "tag": "13",
             "tls": {
                 "alpn": [
-                    "h2"
+                    "http/1.1"
                 ],
                 "enabled": true,
                 "insecure": true,
-                "server_name": "ya.ru",
+                "server_name": "vkvd127.mycdn.me",
                 "utls": {
                     "enabled": true,
                     "fingerprint": "chrome"
                 }
             },
+            "transport": {
+                "headers": {
+                    "Host": "ad3.transitkala.com"
+                },
+                "path": "/",
+                "type": "ws"
+            },
             "type": "vless",
-            "uuid": "6ff213b8-ccc7-4b5a-b4aa-37f7b792a1f1"
-        },
-        {
-            "type": "selector",
-            "tag": "proxy",
-            "outbounds": [
-                "p_0",
-                "p_1",
-                "p_2",
-                "p_3",
-                "p_4",
-                "p_5",
-                "p_6",
-                "p_7",
-                "p_8",
-                "p_9",
-                "p_10",
-                "auto"
-            ],
-            "default": "auto",
-            "interrupt_exist_connections": false
-        },
-        {
-            "type": "urltest",
-            "tag": "auto",
-            "outbounds": [
-                "p_0",
-                "p_1",
-                "p_2",
-                "p_3",
-                "p_4",
-                "p_5",
-                "p_6",
-                "p_7",
-                "p_8",
-                "p_9",
-                "p_10"
-            ],
-            "url": "https://8.8.8.8/generate_204",
-            "interval": "5m",
-            "interrupt_exist_connections": false
-        },
-        {
-            "tag": "direct",
-            "type": "direct"
-        },
-        {
-            "tag": "bypass",
-            "type": "direct"
-        },
-        {
-            "tag": "block",
-            "type": "block"
-        },
-        {
-            "tag": "dns-out",
-            "type": "dns"
+            "uuid": "06d3cd5f-e413-4f20-a45e-53d1aa4df42e"
         }
     ],
     "route": {
@@ -465,4 +526,4 @@
             }
         ]
     }
-}    
+}
