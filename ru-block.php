@@ -78,9 +78,12 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 $response = curl_exec($ch);
 
+
+
 $arr = preg_split("/\s+/", $response);
 $arr = array_unique($arr);
 $arr=array_values($arr);
+
 
 $arr = array_filter($arr, function($str)use($whitelist,$blacklist){
     if(strlen($str)<3) return false;
@@ -94,6 +97,7 @@ $arr = array_filter($arr, function($str)use($whitelist,$blacklist){
     return true;
 });
 $arr=array_values($arr);
+$orig=json_decode(json_encode($arr));
 
 
 $response = implode("\n",$arr);
@@ -132,9 +136,11 @@ foreach($arr as $str)
     }
 }
 $arr=$a;
+
 $after=count($arr);
 sort($arr);
-$full=$arr;
+$full=json_decode(json_encode( $arr));
+
 $arr = array_filter($arr, function($str)use($whitelist){return is_in_list($str,$whitelist);});
 $arr = array_values($arr);
 $file = file_get_contents("tv-ruleset.json");
@@ -148,9 +154,10 @@ file_put_contents("tv-ruleset.json", json_encode($rules, JSON_PRETTY_PRINT));
 
 
 $arr=$full;
+$arr=$orig;
 $arr = array_filter($arr, function($str)use($whitelist){return !is_in_list($str,$whitelist);});
 $arr = array_values($arr);
-
+var_dump(count($full));
 
 $file = file_get_contents("ruleset-template.json");
 $rules = json_decode($file, false);
